@@ -220,6 +220,74 @@
 					ng-show="vm.reports.length > 0"
 					type="submit" class="btn btn-info">Cetak Laporan</button>
 			</div>
+
+			<div ng-show="vm.reportType === 'BY_PPS'">
+				<table class="table row-border hover">
+					<thead>
+						<tr>
+							<th>
+								Nomor
+							</th>
+							<th>
+								Status
+							</th>
+							<th>
+								Tanggal
+							</th>
+							<th>
+								Kondisi
+							</th>
+							<th>
+								Tipe
+							</th>
+							<th>
+								Total Sample
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="r in vm.reports | orderBy: '+state'">
+							<td>
+								{{$index + 1}}
+							</td>
+							<td>
+								<div ng-show="1 == r.state">PPS Baru</div>
+								<div ng-show="2 == r.state">Ajukan Disposisi</div>
+								<div ng-show="3 == r.state">Proses Rekap Uji</div>
+								<div ng-show="4 == r.state">Selesai</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.received_dt}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.sample_condition}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.sample_type}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.total_sample}}
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="vm.reports.length === 0">
+							<td>
+								No data
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button ng-click="vm.printByPPS()" 
+					ng-show="vm.reports.length > 0"
+					type="submit" class="btn btn-info">Cetak Laporan</button>
+			</div>
 		</div>
 	</form>
 </div>

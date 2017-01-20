@@ -11,8 +11,8 @@
 		vm.showReports = false;
 		vm.reports = [];
 		vm.formValue = {
-			from: moment("11-25-2016", "MM-DD-YYYY").toDate(),
-			to: moment("12-25-2016", "MM-DD-YYYY").toDate(),
+			from: moment("11-25-2014", "MM-DD-YYYY").toDate(),
+			to: moment("12-25-2017", "MM-DD-YYYY").toDate(),
 		};
 		vm.reportTypes = {
 			BY_PERSON: {
@@ -41,6 +41,7 @@
 		vm.viewReport = viewReport;
 		vm.printByPerson = printByPerson;
 		vm.printByOfficer = printByOfficer;
+		vm.printByPPS = printByPPS;
 
 		activate();
 		function activate() {
@@ -50,6 +51,7 @@
 			vm.selectedReportTxt = rt.text;
 			vm.reportType = rt.type;
 			vm.reports = [];
+			vm.showReports = false;
 		}
 
 		function toggleDatePopup(key) {
@@ -94,6 +96,26 @@
 				}
 			}
 
+			if ('BY_PPS' === vm.reportType) {
+				dataservice.getReportByPPS(from, to).then(afterGetData);
+				function afterGetData(results) {
+					vm.reports = [];
+					_.forEach(results, function(r, index) {
+						var finded = _.find(vm.reports, function(re) {
+							return re.state === r.state;
+						});
+						if (!finded) {
+							finded = {
+								state: r.state,
+								reports: []
+							};
+							vm.reports.push(finded);	
+						}
+						finded.reports.push(r);
+					});
+				}
+			}
+
 			if ('BY_OFFICER' === vm.reportType) {
 				dataservice.getReportByOfficer(from, to).then(afterGetData);
 				function afterGetData(results) {
@@ -126,6 +148,12 @@
 		function printByOfficer() {
 			dataservice.prePrintReports(vm.reports).then(function() {
 				window.open('print_by_officer.php','_blank');
+			});
+		}
+
+		function printByPPS() {
+			dataservice.prePrintReports(vm.reports).then(function() {
+				window.open('print_by_pps.php','_blank');
 			});
 		}
 

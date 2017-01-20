@@ -43,6 +43,7 @@
 			findAvailablePerson: findAvailablePerson,
 
 			getReportByPerson: getReportByPerson,
+			getReportByPPS: getReportByPPS,
 			getReportByOfficer: getReportByOfficer,
 			prePrintReports: prePrintReports
 		}
@@ -201,6 +202,10 @@
 
 		function getReportByPerson(from, to) {
 			return $http.get('api/report/get_report_by_person.php?from=' + from + '&to=' + to).then(getData);
+		}
+
+		function getReportByPPS(from, to) {
+			return $http.get('api/report/get_report_by_pps.php?from=' + from + '&to=' + to).then(getData);
 		}
 
 		function getReportByOfficer(from, to) {
