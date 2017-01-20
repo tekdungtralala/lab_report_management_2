@@ -40,7 +40,10 @@
 			deletePerson: deletePerson,
 			createPerson: createPerson,
 			editPerson: editPerson,
-			findAvailablePerson: findAvailablePerson
+			findAvailablePerson: findAvailablePerson,
+
+			getReportByPerson: getReportByPerson,
+			prePrintByPerson: prePrintByPerson
 		}
 		return service;
 
@@ -191,12 +194,21 @@
 			return $http.put('api/persons/put.php', data);
 		}
 
-		function getData(response) {
-			return response.data;
-		}
-
 		function findAvailablePerson() {
 			return $http.get('api/persons/find_persons_not_in_report.php').then(getData);	
+		}
+
+		function getReportByPerson(from, to) {
+			return $http.get('api/report/get_report_by_person.php?from=' + from + '&to=' + to).then(getData);	
+		}
+
+		function prePrintByPerson(data) {
+			return $http.post('pre_print_by_person.php', data);
+		}
+
+
+		function getData(response) {
+			return response.data;
 		}
 	}
 

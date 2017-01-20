@@ -68,6 +68,13 @@
 					controllerAs: 'vm',
 					isSecure: true
 				})
+				.state('admin.report', {
+					url: '/report',
+					templateUrl: 'angular-app/pages/admin/report/report.html',
+					controller: 'ReportCtrl',
+					controllerAs: 'vm',
+					isSecure: true
+				})
 				.state('admin.laporan', {
 					url: '/laporan',
 					templateUrl: 'angular-app/pages/admin/laporan/laporan.html',

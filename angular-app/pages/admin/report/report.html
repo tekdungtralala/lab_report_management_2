@@ -1,0 +1,159 @@
+<div class="report">
+	<h3>Laporan</h3>
+
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Pilih Laporan</label>
+			<div class="btn-group col-sm-4 select-report" uib-dropdown is-open="vm.isopen">
+				<button id="single-button" type="button" class="btn btn-default"
+					uib-dropdown-toggle ng-disabled="disabled">
+					{{vm.selectedReportTxt}} <span class="caret"></span>
+				</button>
+			  	<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+					<li role="menuitem" ng-click="vm.viewReportBy(vm.reportTypes['BY_PERSON'])">
+						<a href="">Laporan Pelanggan</a>
+					</li>
+					<li role="menuitem" ng-click="vm.viewReportBy(vm.reportTypes['BY_PPS'])">
+						<a href="">Laporan Transaksi</a>
+					</li>
+					<li role="menuitem" ng-click="vm.viewReportBy(vm.reportTypes['BY_OFFICER'])">
+						<a href="">Laporan Petugas Analis</a>
+					</li>
+					<li role="menuitem" ng-click="vm.viewReportBy(vm.reportTypes['BY_COST'])">
+						<a href="">Laporan Kwitansi/Keuangan Total</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">
+				From 
+			</label>
+			<div class="col-sm-4">
+				<p ng-show="!vm.formValue.isView" class="input-group">
+					<input type="text" class="form-control" 
+						id="from"
+						uib-datepicker-popup="dd-MM-yyyy" 
+						ng-model="vm.formValue.from" 
+						is-open="vm.formValue.isFromOpen" 
+						close-text="Close" 
+						ng-change="vm.fromChanged()"
+						alt-input-formats="altInputFormats" />
+					<span class="input-group-btn">
+						<button 
+							type="button" class="btn btn-default" 
+							ng-click="vm.toggleDatePopup('isFromOpen')">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">
+				To
+			</label>
+			<div class="col-sm-4">
+				<p ng-show="!vm.formValue.isView" class="input-group">
+					<input type="text" class="form-control" 
+						id="to"
+						uib-datepicker-popup="dd-MM-yyyy" 
+						ng-model="vm.formValue.to" 
+						is-open="vm.formValue.isToOpen" 
+						close-text="Close" 
+						alt-input-formats="altInputFormats" 
+						datepicker-options="vm.formValue.toOpt"
+						ng-disabled="!vm.formValue.from"/>
+					<span class="input-group-btn">
+						<button 
+							type="button" class="btn btn-default" 
+							ng-disabled="!vm.formValue.from"
+							ng-click="vm.toggleDatePopup('isToOpen')">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-4">
+				<button ng-click="vm.viewReport()" 
+					ng-disabled="!vm.formValue.to"
+					type="submit" class="btn btn-primary">View</button>
+			</div>
+		</div>
+
+		<div ng-show="vm.showReports">
+			<div ng-show="vm.reportType === 'BY_PERSON'">
+				<table class="table row-border hover">
+					<thead>
+						<tr>
+							<th>
+								Nomor
+							</th>
+							<th>
+								Pelanggan
+							</th>
+							<th>
+								Tanggal
+							</th>
+							<th>
+								Kondisi
+							</th>
+							<th>
+								Tipe
+							</th>
+							<th>
+								Total Sample
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="r in vm.reports">
+							<td>
+								{{$index + 1}}
+							</td>
+							<td>
+								{{r.name}}, {{r.reports.length}}<br/>
+								{{r.address}}<br/>
+								{{r.email}}<br/>
+								{{r.phoneNumber}}<br/>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.received_dt}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.sample_condition}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.sample_type}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.total_sample}}
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="vm.reports.length === 0">
+							<td>
+								No data
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button ng-click="vm.printByPerson()" 
+					ng-show="vm.reports.length > 0"
+					type="submit" class="btn btn-info">Cetak Laporan</button>
+			</div>
+		</div>
+	</form>
+</div>

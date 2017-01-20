@@ -30,3 +30,23 @@
 	padding: 0px;
 	margin: 0px;
 }
+
+
+.report .select-report {
+	padding-left: 0px;
+	padding-right: 0px;
+	position: relative;
+	left: 10px;
+}
+.report .select-report > button {
+	width: 100%;
+	text-align: left;
+}
+.report .select-report > button .caret {
+	float: right;
+	position: relative;
+	top: 9px;
+}
+.report .select-report > .dropdown-menu {
+	width: 100%;
+}
