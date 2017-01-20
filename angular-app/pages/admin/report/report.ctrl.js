@@ -5,14 +5,14 @@
 		.module('app')
 		.controller('ReportCtrl', ReportCtrl);
 
-	function ReportCtrl(dataservice) {
+	function ReportCtrl(dataservice, helper) {
 		var vm = this;
 		var selectedType = null;
 		vm.showReports = false;
 		vm.reports = [];
 		vm.formValue = {
-			from: moment("11-25-2014", "MM-DD-YYYY").toDate(),
-			to: moment("12-25-2017", "MM-DD-YYYY").toDate(),
+			// from: moment("11-25-2014", "MM-DD-YYYY").toDate(),
+			// to: moment("12-25-2017", "MM-DD-YYYY").toDate(),
 		};
 		vm.reportTypes = {
 			BY_PERSON: {
@@ -42,6 +42,7 @@
 		vm.printByPerson = printByPerson;
 		vm.printByOfficer = printByOfficer;
 		vm.printByPPS = printByPPS;
+		vm.printByCost = printByCost;
 
 		activate();
 		function activate() {
@@ -116,6 +117,19 @@
 				}
 			}
 
+			if ('BY_COST' === vm.reportType) {
+				dataservice.getReportByPPS(from, to).then(afterGetData);
+				function afterGetData(results) {
+					vm.reports = results;
+					vm.formValue.total = 0;
+					_.forEach(results, function(r, index) {
+						vm.formValue.total = vm.formValue.total + parseInt(r.total_price);
+						r.total_priceRP = helper.toRp(r.total_price);
+					});
+					vm.formValue.totalRP = helper.toRp(vm.formValue.total);
+				}
+			}
+
 			if ('BY_OFFICER' === vm.reportType) {
 				dataservice.getReportByOfficer(from, to).then(afterGetData);
 				function afterGetData(results) {
@@ -155,6 +169,15 @@
 			dataservice.prePrintReports(vm.reports).then(function() {
 				window.open('print_by_pps.php','_blank');
 			});
+		}
+
+		function printByCost() {
+			dataservice.prePrintReports({
+				reports: vm.reports,
+				totalRP: vm.formValue.totalRP
+			}).then(function() {
+				window.open('print_by_cost.php','_blank');
+			});			
 		}
 
 	}

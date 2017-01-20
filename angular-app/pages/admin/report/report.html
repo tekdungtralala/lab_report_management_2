@@ -288,6 +288,68 @@
 					ng-show="vm.reports.length > 0"
 					type="submit" class="btn btn-info">Cetak Laporan</button>
 			</div>
+
+			<div ng-show="vm.reportType === 'BY_COST'">
+				<table class="table row-border hover">
+					<thead>
+						<tr>
+							<th>
+								Nomor
+							</th>
+							<th>
+								Tanggal
+							</th>
+							<th>
+								Kondisi
+							</th>
+							<th>
+								Tipe
+							</th>
+							<th>
+								Total Sample
+							</th>
+							<th class="text-right">
+								Harga
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="r in vm.reports">
+							<td>
+								{{$index + 1}}
+							</td>
+							<td>
+								{{r.received_dt}}
+							</td>
+							<td>
+								{{r.sample_condition}}
+							</td>
+							<td>
+								{{r.sample_type}}
+							</td>
+							<td>
+								{{r.total_sample}}
+							</td>
+							<td class="text-right">
+								{{r.total_priceRP}}
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6" class="text-right info">
+								Total: {{vm.formValue.totalRP}}
+							</td>
+						</tr>
+						<tr ng-show="vm.reports.length === 0">
+							<td>
+								No data
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button ng-click="vm.printByCost()" 
+					ng-show="vm.reports.length > 0"
+					type="submit" class="btn btn-info">Cetak Laporan</button>
+			</div>
 		</div>
 	</form>
 </div>
