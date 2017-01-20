@@ -14,7 +14,7 @@
 						<a href="">Laporan Pelanggan</a>
 					</li>
 					<li role="menuitem" ng-click="vm.viewReportBy(vm.reportTypes['BY_PPS'])">
-						<a href="">Laporan Transaksi</a>
+						<a href="">Laporan Transaksi PPS</a>
 					</li>
 					<li role="menuitem" ng-click="vm.viewReportBy(vm.reportTypes['BY_OFFICER'])">
 						<a href="">Laporan Petugas Analis</a>
@@ -117,7 +117,7 @@
 								{{$index + 1}}
 							</td>
 							<td>
-								{{r.name}}, {{r.reports.length}}<br/>
+								{{r.name}}<br/>
 								{{r.address}}<br/>
 								{{r.email}}<br/>
 								{{r.phoneNumber}}<br/>
@@ -151,6 +151,72 @@
 					</tbody>
 				</table>
 				<button ng-click="vm.printByPerson()" 
+					ng-show="vm.reports.length > 0"
+					type="submit" class="btn btn-info">Cetak Laporan</button>
+			</div>
+
+			<div ng-show="vm.reportType === 'BY_OFFICER'">
+				<table class="table row-border hover">
+					<thead>
+						<tr>
+							<th>
+								Nomor
+							</th>
+							<th>
+								Petugas
+							</th>
+							<th>
+								Tanggal
+							</th>
+							<th>
+								Kondisi
+							</th>
+							<th>
+								Tipe
+							</th>
+							<th>
+								Total Sample
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="r in vm.reports">
+							<td>
+								{{$index + 1}}
+							</td>
+							<td>
+								{{r.official_id}}<br/>
+								{{r.name}}<br/>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.received_dt}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.sample_condition}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.sample_type}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.total_sample}}
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="vm.reports.length === 0">
+							<td>
+								No data
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button ng-click="vm.printByOfficer()" 
 					ng-show="vm.reports.length > 0"
 					type="submit" class="btn btn-info">Cetak Laporan</button>
 			</div>

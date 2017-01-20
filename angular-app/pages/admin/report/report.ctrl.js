@@ -20,7 +20,7 @@
 				type: 'BY_PERSON'
 			},
 			BY_PPS: {
-				text: 'Laporan Transaksi',
+				text: 'Laporan Transaksi PPS',
 				type: 'BY_PPS'
 			},
 			BY_OFFICER: {
@@ -40,6 +40,7 @@
 		vm.fromChanged = fromChanged;
 		vm.viewReport = viewReport;
 		vm.printByPerson = printByPerson;
+		vm.printByOfficer = printByOfficer;
 
 		activate();
 		function activate() {
@@ -63,12 +64,13 @@
 
 		function viewReport() {
 			vm.showReports = true;
-			if ('BY_PERSON' === vm.reportType) {
-				var dateFormat = 'YYYY-MM-D';
-				var from = moment(vm.formValue.from).format(dateFormat);
-				vm.formValue.fromStr = from;
-				var to = moment(vm.formValue.to).format(dateFormat);
-				vm.formValue.toStr = to;
+			var dateFormat = 'YYYY-MM-D';
+			var from = moment(vm.formValue.from).format(dateFormat);
+			vm.formValue.fromStr = from;
+			var to = moment(vm.formValue.to).format(dateFormat);
+			vm.formValue.toStr = to;
+
+			if ('BY_PERSON' === vm.reportType) {			
 				dataservice.getReportByPerson(from, to).then(afterGetData);
 				function afterGetData(results) {
 					vm.reports = [];
@@ -91,11 +93,39 @@
 					});
 				}
 			}
+
+			if ('BY_OFFICER' === vm.reportType) {
+				dataservice.getReportByOfficer(from, to).then(afterGetData);
+				function afterGetData(results) {
+					vm.reports = [];
+					_.forEach(results, function(r, index) {
+						var finded = _.find(vm.reports, function(re) {
+							return re.officer_id === r.officer_id;
+						});
+						if (!finded) {
+							finded = {
+								officer_id: r.officer_id,
+								name: r.name,
+								official_id: r.official_id,
+								reports: []
+							};
+							vm.reports.push(finded);	
+						}
+						finded.reports.push(r);
+					});
+				}
+			}
 		}
 
 		function printByPerson() {
-			dataservice.prePrintByPerson(vm.reports).then(function() {
+			dataservice.prePrintReports(vm.reports).then(function() {
 				window.open('print_by_person.php','_blank');
+			});
+		}
+
+		function printByOfficer() {
+			dataservice.prePrintReports(vm.reports).then(function() {
+				window.open('print_by_officer.php','_blank');
 			});
 		}
 

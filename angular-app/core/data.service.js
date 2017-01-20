@@ -43,7 +43,8 @@
 			findAvailablePerson: findAvailablePerson,
 
 			getReportByPerson: getReportByPerson,
-			prePrintByPerson: prePrintByPerson
+			getReportByOfficer: getReportByOfficer,
+			prePrintReports: prePrintReports
 		}
 		return service;
 
@@ -199,11 +200,15 @@
 		}
 
 		function getReportByPerson(from, to) {
-			return $http.get('api/report/get_report_by_person.php?from=' + from + '&to=' + to).then(getData);	
+			return $http.get('api/report/get_report_by_person.php?from=' + from + '&to=' + to).then(getData);
 		}
 
-		function prePrintByPerson(data) {
-			return $http.post('pre_print_by_person.php', data);
+		function getReportByOfficer(from, to) {
+			return $http.get('api/report/get_report_by_officer.php?from=' + from + '&to=' + to).then(getData);
+		}
+
+		function prePrintReports(data) {
+			return $http.post('pre_print_reports.php', data);
 		}
 
 
