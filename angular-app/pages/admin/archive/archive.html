@@ -1,0 +1,197 @@
+<div class="archive">
+	<h3>Laporan Hasil Uji (LHU)</h3>
+
+	<div ng-show="!vm.showForm">
+		<table datatable="ng" class="table row-border hover">
+			<thead>
+				<tr>
+					<th>Pelanggan</th>
+					<th>Tgl. Terima</th>
+					<th>Tgl. Analisis</th>
+					<th>Kondisi Sample</th>
+					<th>Jenis Sample</th>
+					<th>Jumlah Sample</th>
+					<th>Biaya</th>
+					<th class="col-md-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="l in vm.list">
+					<td>{{l.person_name}} / {{l.person_address}}</td>
+					<td>{{l.received_dt}}</td>
+					<td>{{l.analisis_dt}}</td>
+					<td>{{l.sample_condition}}</td>
+					<td>{{l.sample_type}}</td>
+					<td>{{l.total_sample}}</td>
+					<td>{{l.total_priceRp}}</td>
+					<td class="col-md-1">
+						<button ng-click="vm.editData(l)" 
+							uib-popover="Lihat Detail" popover-trigger="'mouseenter'"
+							type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div ng-show="vm.showForm">
+		<button type="button" class="btn btn-default btn-sm"
+			ng-click="vm.toggleForm()">
+			<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Back To List
+		</button>
+
+		<form class="form-horizontal">
+			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
+				<label class="col-sm-2 control-label">Nama Pelanggan</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						{{vm.formValue.person.nama}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
+				<label class="col-sm-2 control-label">Alamat</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						{{vm.formValue.person.alamat}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['received_dt']}" class="form-group">
+				<label class="col-sm-2 control-label">Tanggal Terima</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.received_dtStr}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['analisis_dt']}" class="form-group">
+				<label class="col-sm-2 control-label">Tanggal Analisis</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.analisis_dtStr}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['sample_condition']}" class="form-group">
+				<label class="col-sm-2 control-label">Kondisi Sampel</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.sample_condition}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['sample_type']}" class="form-group">
+				<label class="col-sm-2 control-label">Jenis Sample</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.sample_condition}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['officer']}" class="form-group">
+				<label class="col-sm-2 control-label">Petugas (NIP)</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.officer.official_id}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['officer']}" class="form-group">
+				<label class="col-sm-2 control-label">Nama</label>
+				<div class="col-sm-5">
+					<p class="form-control-static">
+						{{vm.formValue.officer.name}}
+					</p>
+				</div>
+			</div>
+
+			<table ng-show="vm.formValue.samples.length > 0" class="table table-striped table-samples">
+				<thead>
+					<th>No</th>
+					<th>Kode Sample</th>
+					<th>Parameter</th>
+					<th>Harga / Satuan</th>
+					<th>Hasil / Metode</th>
+					<th>Jumlah</th>
+					<th>Total</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="s in vm.formValue.samples" >
+						<td class="col-sm-1">
+							{{$index + 1}}
+						</td>
+						<td class="col-sm-2">
+							<div ng-class="{'has-error': vm.hasError['sample' + s.number]}" class="input-group">
+								<p class="form-control-static">
+									{{s.sampleCode}}
+								</p>
+							</div>
+						</td>
+						<td class="col-sm-3">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">{{p.name}}</li>
+							</ul>
+						</td>
+						<td class="col-sm-3">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">{{p.priceRp}} / {{p.unit}}</li>
+							</ul>
+						</td>
+						<td class="col-sm-3">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">{{p.result}} / {{p.method}}</li>
+							</ul>
+						</td>
+						<td class="col-sm-1">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">
+										<span>
+											{{p.quantity}}
+										</span>
+									</li>
+							</ul>
+						</td>
+						<td class="col-sm-2">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">
+									{{p.totalRp}}
+								</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" class="info text-right">
+							Total : 
+						</td>
+						<td class="info">
+							{{vm.formValue.totalRp}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			 
+			<div class="btn-group btn-group-justified">	
+					<a type="button" href="tespdf.php?id={{vm.formValue.id}}" target="_blank" class="btn btn-primary" >Cetak LHU</a>
+					<a href="print_kwitansi.php?id={{vm.formValue.id}}" target="_blank" class="btn btn-primary">Cetak Kwitansi</a>
+			</div>
+			</br>
+			</br>
+		</form>
+	</div>
+</div>

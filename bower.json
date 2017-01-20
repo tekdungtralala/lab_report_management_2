@@ -1,0 +1,23 @@
+{
+  "name": "dbanalitik2",
+  "authors": [
+    "rendikabolt@gmail.com"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.6.0",
+    "angular-cookies": "^1.6.0",
+    "angular-ui-router": "^0.3.2",
+    "angular-bootstrap": "^2.3.1",
+    "bootstrap": "^3.3.7",
+    "jQuery": "^3.1.1",
+    "moment": "^2.17.1",
+    "lodash": "^4.17.2",
+    "angular-animate": "^1.6.0",
+    "angular-datatables": "^0.5.6"
+  }
+}

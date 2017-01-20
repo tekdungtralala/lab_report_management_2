@@ -1,0 +1,72 @@
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="">Balai Teknologi Pengolahan Air dan Limbah</a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="">About</a>
+				</li>
+				<li>
+					<a href="">Services</a>
+				</li>
+				<li>
+					<a href="">Contact</a>
+				</li>
+			</ul>
+		</div>
+		-->
+	</div>
+	<!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div style="margin-top: 65px">
+	<div class="col-md-3">
+		<p class="lead">Analitik Lab's</p>
+		<div class="list-group">
+			<a ng-class="{'active': vm.stateActive === 'admin.persons'}" 
+				ng-click="vm.gotoToState('admin.persons')" href="" class="list-group-item" >Data Pelanggan</a>
+			<a ng-class="{'active': vm.stateActive === 'admin.parameter'}"
+				ng-click="vm.gotoToState('admin.parameter')" href="" class="list-group-item">Data Parameter</a>
+			<a ng-class="{'active': vm.stateActive === 'admin.officer'}"
+				ng-click="vm.gotoToState('admin.officer')" href="" class="list-group-item">Data Analis</a>
+			<a ng-class="{'active': vm.stateActive === 'admin.testMethod'}"
+				ng-click="vm.gotoToState('admin.testMethod')" href="" class="list-group-item">Data Metode Uji</a>
+				
+				<a ng-class="{'danger': vm.stateActive === 'admin.testMethod'}"
+				ng-click="vm.gotoToState('admin.testMethod')" href="" class="list-group-item">-----------------------------------------------------------------------</a>
+				
+			<a ng-class="{'active': vm.stateActive === 'admin.pps'}"
+				ng-click="vm.gotoToState('admin.pps')" href="" class="list-group-item">Entry Form PPS</a>
+			<a ng-class="{'active': vm.stateActive === 'admin.disposition'}"
+				ng-click="vm.gotoToState('admin.disposition')" href="" class="list-group-item">Disposisi Analis PPS</a>
+			<a ng-class="{'active': vm.stateActive === 'admin.ppsInProgress'}"
+				ng-click="vm.gotoToState('admin.ppsInProgress')" href="" class="list-group-item">Rekap Uji PPS</a>
+			<a ng-class="{'active': vm.stateActive === 'admin.archive'}"
+				ng-click="vm.gotoToState('admin.archive')" href="" class="list-group-item">LHU dan Kwitansi</a>
+			<a ng-class="{'active': vm.stateActive === 'admin.archive'}"
+				ng-click="vm.gotoToState('admin.archive')" href="" class="list-group-item">Laporan</a>
+				
+				<a ng-class="{'danger': vm.stateActive === 'admin.testMethod'}"
+				ng-click="vm.gotoToState('admin.testMethod')" href="" class="list-group-item">-----------------------------------------------------------------------</a>
+				
+			<a ng-click="vm.logout()" href="" class="list-group-item">Logout</a>
+		</div>
+	</div>
+
+	<div class="col-md-9">
+		<ui-view/>
+	</div>
+</div>
+<!-- /.container -->

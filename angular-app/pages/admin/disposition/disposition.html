@@ -1,0 +1,230 @@
+<div class="disposition">
+	<h3>Disposisi Analis</h3>
+
+	<div ng-show="!vm.showForm">
+		<table datatable="ng" class="table row-border hover">
+			<thead>
+				<tr>
+					<th>Pelanggan</th>
+					<th>Tgl. Terima</th>
+					<th>Tgl. Analisis</th>
+					<th>Kondisi Sample</th>
+					<th>Jenis Sample</th>
+					<th>Jumlah Sample</th>
+					<th>Biaya</th>
+					<th class="col-md-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="l in vm.list">
+					<td>{{l.person_name}} / {{l.person_address}}</td>
+					<td>{{l.received_dt}}</td>
+					<td>{{l.analisis_dt}}</td>
+					<td>{{l.sample_condition}}</td>
+					<td>{{l.sample_type}}</td>
+					<td>{{l.total_sample}}</td>
+					<td>{{l.total_priceRp}}</td>
+					<td class="col-md-1">
+						<button ng-click="vm.editData(l)" 
+							uib-popover="Lihat Detail" popover-trigger="'mouseenter'"
+							type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div ng-show="vm.showForm">
+		<button type="button" class="btn btn-default btn-sm"
+			ng-click="vm.toggleForm()">
+			<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span> Back To List
+		</button>
+
+		<form class="form-horizontal">
+			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
+				<label class="col-sm-2 control-label">Nama Pelanggan</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						{{vm.formValue.person.nama}}
+					</p>
+				</div>
+				<div class="col-sm-1">
+					<button ng-hide="vm.formValue.id"
+						ng-click="vm.findPerson()" type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
+				<label class="col-sm-2 control-label">Alamat</label>
+				<div class="col-sm-9">
+					<p class="form-control-static">
+						{{vm.formValue.person.alamat}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['received_dt']}" class="form-group">
+				<label class="col-sm-2 control-label">Tanggal Terima</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.received_dtStr}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['analisis_dt']}" class="form-group">
+				<label class="col-sm-2 control-label">Tanggal Analisis</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.analisis_dtStr}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['sample_condition']}" class="form-group">
+				<label class="col-sm-2 control-label">Kondisi Sampel</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.sample_condition}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['sample_type']}" class="form-group">
+				<label class="col-sm-2 control-label">Jenis Sample</label>
+				<div class="col-sm-4">
+					<p class="form-control-static">
+						{{vm.formValue.sample_condition}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['officer']}" class="form-group">
+				<label class="col-sm-2 control-label">Petugas (NIP)</label>
+				<div class="col-sm-4">
+					<input ng-model="vm.formValue.officer.official_id" 
+						id="officer"
+						type="text" class="form-control" placeholder="Nip Petugas" disabled>
+				</div>
+				<div class="col-sm-1">
+					<button ng-click="vm.findOfficer()" type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['officer']}" class="form-group">
+				<label class="col-sm-2 control-label">Nama</label>
+				<div class="col-sm-5">
+					<input ng-model="vm.formValue.officer.name" 
+						id="officer"
+						type="text" class="form-control" placeholder="Nama Petugas" disabled>
+				</div>
+			</div>
+
+			<div class="form-group" ng-show="vm.formValue.officer.name">
+				<div class="col-sm-offset-2  col-sm-10">
+					<button ng-click="vm.saveForm()" type="submit" class="btn btn-primary">Save</button>
+					&nbsp;&nbsp;
+					<button ng-click="vm.removeOfficer()" type="submit" class="btn btn-default">Cancel</button>
+				</div>
+			</div>
+
+			<table ng-show="vm.formValue.samples.length > 0" class="table table-striped table-samples">
+				<thead>
+					<th>No</th>
+					<th>Kode Sample</th>
+					<th>Parameter</th>
+					<th>Harga / Satuan</th>
+					<th>Jumlah</th>
+					<th>Total</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="s in vm.formValue.samples" >
+						<td class="col-sm-1">
+							{{$index + 1}}
+						</td>
+						<td class="col-sm-2">
+							<div ng-class="{'has-error': vm.hasError['sample' + s.number]}" class="input-group">
+								<p class="form-control-static">
+									{{s.sampleCode}}
+								</p>
+							</div>
+						</td>
+						<td class="col-sm-3">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">{{p.name}}</li>
+							</ul>
+						</td>
+						<td class="col-sm-3">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">{{p.priceRp}} / {{p.unit}}</li>
+							</ul>
+						</td>
+						<td class="col-sm-1">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">
+										<span>
+											{{p.quantity}}
+										</span>
+									</li>
+							</ul>
+						</td>
+						<td class="col-sm-2">
+							<ul class="list-group" ng-show="s.parameters.length > 0">
+								<li class="list-group-item param-item"
+									ng-repeat="p in s.parameters">
+									{{p.totalRp}}
+								</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="5" class="info text-right">
+							Total : 
+						</td>
+						<td class="info">
+							{{vm.formValue.totalRp}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="bg-danger error-msg" ng-show="vm.hasError['info']">
+				{{vm.hasError['info']}}
+			</div>
+		</form>
+	</div>
+
+	<script type="text/ng-template" id="find-officer-dialog.html">
+		<div class="modal-header">
+			<h4 class="modal-title">
+				Pilih Petugas
+			</h4>
+		</div>
+		<div class="modal-body">
+			<table datatable="ng" class="table table-hover row-border hover" id="table-choose-parameter">
+				<thead>
+					<tr>
+						<th>Nip</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="d in vm.officers"
+						ng-click="vm.selectOfficer(d)">
+						<td>{{d.official_id}}</td>
+						<td>{{d.name}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</script>
+</div>
