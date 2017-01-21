@@ -4,7 +4,7 @@ include '../connect.php';
 $from = $_GET['from'];
 $to =  $_GET['to'];
 
-$sql = "SELECT b.* FROM pps b WHERE b.received_dt >= '$from' && b.received_dt <= '$to' ORDER BY b.received_dt ASC";
+$sql = "SELECT a.nama as nama_pelanggan, b.* FROM pelanggan a, pps b WHERE a.id = b.id_person && b.received_dt >= '$from' && b.received_dt <= '$to' ORDER BY b.received_dt ASC";
 $result = $conn->query($sql);
 $rows = array();
 if ($result->num_rows > 0) {

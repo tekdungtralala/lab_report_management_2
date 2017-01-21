@@ -169,6 +169,9 @@
 								Tanggal
 							</th>
 							<th>
+								Nama
+							</th>
+							<th>
 								Kondisi
 							</th>
 							<th>
@@ -191,6 +194,11 @@
 							<td>
 								<div ng-repeat="re in r.reports">
 									{{re.received_dt}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.nama_pelanggan}}
 								</div>
 							</td>
 							<td>
@@ -235,6 +243,9 @@
 								Tanggal
 							</th>
 							<th>
+								Nama
+							</th>
+							<th>
 								Kondisi
 							</th>
 							<th>
@@ -259,6 +270,11 @@
 							<td>
 								<div ng-repeat="re in r.reports">
 									{{re.received_dt}}
+								</div>
+							</td>
+							<td>
+								<div ng-repeat="re in r.reports">
+									{{re.nama_pelanggan}}
 								</div>
 							</td>
 							<td>
@@ -300,6 +316,9 @@
 								Tanggal
 							</th>
 							<th>
+								Nama
+							</th>
+							<th>
 								Kondisi
 							</th>
 							<th>
@@ -322,6 +341,9 @@
 								{{r.received_dt}}
 							</td>
 							<td>
+								{{r.nama_pelanggan}}
+							</td>
+							<td>
 								{{r.sample_condition}}
 							</td>
 							<td>
@@ -335,7 +357,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="6" class="text-right info">
+							<td colspan="7" class="text-right info">
 								Total: {{vm.formValue.totalRP}}
 							</td>
 						</tr>
