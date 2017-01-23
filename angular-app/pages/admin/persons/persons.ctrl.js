@@ -44,6 +44,7 @@
 				vm.formValue.email = person.email;
 				vm.formValue.address = person.alamat;
 				vm.formValue.desc = person.ket;
+				vm.formValue.jenis_industri = person.jenis_industri;
 				if (isView)
 					vm.formValue.isView = true;
 			}
@@ -65,6 +66,8 @@
 
 			if (!vm.formValue.name)
 				vm.hasError['name'] = true;
+			if (!vm.formValue.jenis_industri)
+				vm.hasError['jenis_industri'] = true;
 			if (!vm.formValue.hp)
 				vm.hasError['hp'] = true;
 			if (!vm.formValue.address)

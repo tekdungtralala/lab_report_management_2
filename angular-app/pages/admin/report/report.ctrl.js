@@ -88,6 +88,7 @@
 								address: r.alamat,
 								email: r.email,
 								phoneNumber: r.hp,
+								kode_plg: r.kode_plg,
 								reports: []
 							};
 							vm.reports.push(finded);	

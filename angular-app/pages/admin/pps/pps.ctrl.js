@@ -205,6 +205,12 @@
 					dataservice.createPPS(vm.formValue).then(afterSave);;
 				}
 
+				dataservice.prePrintReports({
+					formValue: vm.formValue,
+				}).then(function() {
+					window.open('cetak_tanda_terima.php','_blank');
+				});	
+
 				function afterSave() {
 					vm.showForm = false;
 					vm.formValue = {};
@@ -228,6 +234,9 @@
 			vm.formValue.person.nama = data.person_name;
 			vm.formValue.person.alamat = data.person_address;
 			vm.formValue.person.id = data.person_id;
+			vm.formValue.person.kode_plg = data.person_kode_plg;
+			vm.formValue.person.jenis_industri = data.person_jenis_industri;
+			vm.formValue.person.ket = data.person_ket;
 			var dateFormat = 'YYYY-MM-D';
 			vm.formValue.received_dt = moment(data.received_dt, dateFormat).toDate();
 			vm.formValue.analisis_dt = moment(data.analisis_dt, dateFormat).toDate();

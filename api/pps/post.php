@@ -12,7 +12,7 @@
 			. ", '" . $_GET['total_sample'] . "'"
 			. ", '" . $_GET['total_price'] . "'"
 			. ", '" . $json . "'"
-			. ", 1, NULL);";
+			. ", 1, NULL, NULL, NULL);";
 
 		$conn->query($sql);
 	}

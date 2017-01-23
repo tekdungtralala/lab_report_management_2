@@ -7,7 +7,9 @@
 
 		$sql = "update pps SET "
 			. "  state = '3'"
-			. " , officer_id = " . $officer['officer_id'] 
+			. " , officer_id = " . $officer['officer_id']
+			. " , pps_desc = '" . $officer['pps_desc']  ."'"
+			. " , disposition_dt = '" . $officer['disposition_dt']  ."'"
 			. " WHERE id= " . $_GET['id'];
 
 		$conn->query($sql);

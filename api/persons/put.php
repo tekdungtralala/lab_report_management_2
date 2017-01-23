@@ -9,6 +9,7 @@
 			. " set kode_plg='". $person['kp'] . "'" 
 			. " , nama='". $person['name'] . "'" 
 			. " , alamat='". $person['address'] . "'" 
+			. " , jenis_industri='". $person['jenis_industri'] . "'" 
 			. " , hp='". $person['hp'] . "'" 
 			. " , email='". $person['email'] . "'" 
 			. " , ket='". $person['desc'] . "'"

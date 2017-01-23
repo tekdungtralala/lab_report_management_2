@@ -20,7 +20,8 @@
 			. $person['address'] . "', '" 
 			. $person['hp'] . "', '" 
 			. $person['email'] . "', '" 
-			. $person['desc'] . "')";
+			. $person['desc'] . "', '" 
+			. $person['jenis_industri'] . "')";
 
 		$conn->query($sql);
 

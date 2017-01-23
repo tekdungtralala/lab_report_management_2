@@ -11,24 +11,26 @@
 			<thead>
 				<tr>
 					<th>Pelanggan</th>
+					<th>Kode Sampel</th>
+					<th>Keterangan</th>
 					<th>Tgl. Terima</th>
 					<th>Tgl. Analisis</th>
 					<th>Kondisi Sample</th>
 					<th>Jenis Sample</th>
 					<th>Jumlah Sample</th>
-					<th>Biaya</th>
 					<th class="col-md-3"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="l in vm.list">
 					<td>{{l.person_name}} / {{l.person_address}}</td>
+					<td>{{l.person_kode_plg}}</td>
+					<td>{{l.person_ket}}</td>
 					<td>{{l.received_dt}}</td>
 					<td>{{l.analisis_dt}}</td>
 					<td>{{l.sample_condition}}</td>
 					<td>{{l.sample_type}}</td>
 					<td>{{l.total_sample}}</td>
-					<td>{{l.total_priceRp}}</td>
 					<td class="col-md-3">
 						<button ng-click="vm.editData(l)" 
 							uib-popover="Edit Data" popover-trigger="'mouseenter'"
@@ -59,6 +61,20 @@
 
 		<form class="form-horizontal">
 			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
+				<label class="col-sm-2 control-label">Kode Sampel</label>
+				<div class="col-sm-9">
+					<input ng-model="vm.formValue.person.kode_plg" 
+						ng-show="!vm.formValue.isView"
+						id="person"
+						type="text" class="form-control" placeholder="Kode Sampel" disabled>
+					<p ng-show="vm.formValue.isView"
+						class="form-control-static">
+						{{vm.formValue.person.kode_plg}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
 				<label class="col-sm-2 control-label">Nama Pelanggan</label>
 				<div class="col-sm-9">
 					<input ng-model="vm.formValue.person.nama" 
@@ -88,6 +104,34 @@
 					<p ng-show="vm.formValue.isView"
 						class="form-control-static">
 						{{vm.formValue.person.alamat}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
+				<label class="col-sm-2 control-label">Keterangan</label>
+				<div class="col-sm-9">
+					<input ng-model="vm.formValue.person.ket" 
+						ng-show="!vm.formValue.isView"
+						id="person"
+						type="text" class="form-control" placeholder="Keterangan" disabled>
+					<p ng-show="vm.formValue.isView"
+						class="form-control-static">
+						{{vm.formValue.person.ket}}
+					</p>
+				</div>
+			</div>
+
+			<div ng-class="{'has-error': vm.hasError['person']}" class="form-group">
+				<label class="col-sm-2 control-label">Jenis Industri</label>
+				<div class="col-sm-9">
+					<input ng-model="vm.formValue.person.jenis_industri" 
+						ng-show="!vm.formValue.isView"
+						id="person"
+						type="text" class="form-control" placeholder="Jenis Industri" disabled>
+					<p ng-show="vm.formValue.isView"
+						class="form-control-static">
+						{{vm.formValue.person.jenis_industri}}
 					</p>
 				</div>
 			</div>

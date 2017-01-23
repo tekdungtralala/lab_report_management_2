@@ -20,6 +20,7 @@
 		vm.selectOfficer = selectOfficer;
 		vm.removeOfficer = removeOfficer;
 		vm.saveForm = saveForm;
+		vm.toggleDatePopup = toggleDatePopup;
 
 		activate();
 		function activate() {
@@ -42,6 +43,7 @@
 			vm.formValue.person.nama = data.person_name;
 			vm.formValue.person.alamat = data.person_address;
 			vm.formValue.person.id = data.person_id;
+			vm.formValue.person.kode_plg = data.person_kode_plg;
 			var dateFormat = 'YYYY-MM-D';
 			vm.formValue.received_dt = moment(data.received_dt, dateFormat).toDate();
 			vm.formValue.analisis_dt = moment(data.analisis_dt, dateFormat).toDate();
@@ -91,17 +93,44 @@
 		}
 
 		function saveForm() {
-			var r = confirm('Are you sure want to save this sample ?');
-			if (r === true) {
-				var data = { officer_id: vm.formValue.officer.id };
-				dataservice
-					.submitToTestResult(vm.formValue.id, data)
-					.then(afterSubmit);
-				function afterSubmit() {
-					toggleForm();
-					activate();
-				}
+			vm.hasError = {};
+
+			if (!vm.formValue.disposition_dt)
+				vm.hasError['disposition_dt'] = true;
+			if (!vm.formValue.pps_desc)
+				vm.hasError['pps_desc'] = true;
+
+			if (Object.keys(vm.hasError).length > 0) {
+				helper.setFocus(Object.keys(vm.hasError)[0]);
+			} else {
+				var r = confirm('Are you sure want to save this sample ?');
+				if (r === true) {
+					var dateFormat = 'YYYY-MM-D';
+					vm.formValue.disposition_dtStr = moment(vm.formValue.disposition_dt).format(dateFormat);
+					var data = {
+						officer_id: vm.formValue.officer.id,
+						disposition_dt: vm.formValue.disposition_dtStr,
+						pps_desc: vm.formValue.pps_desc
+					};
+
+					dataservice
+						.submitToTestResult(vm.formValue.id, data)
+						.then(afterSubmit);
+					function afterSubmit() {
+						dataservice.prePrintReports({
+							formValue: vm.formValue,
+						}).then(function() {
+							toggleForm();
+							activate();
+							window.open('cetak_disposisi.php','_blank');
+						});	
+					}
+				}				
 			}
+		}
+
+		function toggleDatePopup(key) {
+			vm.formValue[key] = !vm.formValue[key];
 		}
 	}
 

@@ -51,7 +51,12 @@
 						ng-disabled="vm.formValue.isView"
 						id="name" type="text" class="form-control" placeholder="Nama Pelanggan">
 				</div>
-				
+				<div ng-class="{'has-error': vm.hasError['jenis_industri']}" class="form-group">
+					<label for="">Jenis Industri</label>
+					<input ng-model="vm.formValue.jenis_industri" 
+						ng-disabled="vm.formValue.isView"
+						id="jenis_industri" type="text" class="form-control" placeholder="Jenis Industri">
+				</div>
 				<div ng-class="{'has-error': vm.hasError['hp']}" class="form-group">
 					<label for="">Telepon / No Hp</label>
 					<input ng-model="vm.formValue.hp" 
